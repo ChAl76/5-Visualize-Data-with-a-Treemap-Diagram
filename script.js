@@ -54,6 +54,12 @@ function createVisualization() {
   const DATASET =
     DATASETS[new URLSearchParams(window.location.search).get('data')] ||
     DATASETS.movies;
+
+  // Create color scale
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+  // Create treemap layout
+  const treemap = d3.treemap().size([width, height]).paddingInner(1);
 }
 
 // Initial creation
