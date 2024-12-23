@@ -1,15 +1,15 @@
 const DATASETS = {
-  videogames: {
-    TITLE: 'Video Game Sales',
-    DESCRIPTION: 'Top 100 Most Sold Video Games',
-    FILE_PATH:
-      'https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json',
-  },
   movies: {
     TITLE: 'Movie Sales',
     DESCRIPTION: 'Top 100 Highest Grossing Movies Grouped By Genre',
     FILE_PATH:
       'https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/movie-data.json',
+  },
+  videogames: {
+    TITLE: 'Video Game Sales',
+    DESCRIPTION: 'Top 100 Most Sold Video Games',
+    FILE_PATH:
+      'https://cdn.freecodecamp.org/testable-projects-fcc/data/tree_map/video-game-sales-data.json',
   },
   kickstarter: {
     TITLE: 'Kickstarter Pledges',
@@ -49,6 +49,11 @@ function createVisualization() {
     )
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
+
+  // Get current dataset
+  const DATASET =
+    DATASETS[new URLSearchParams(window.location.search).get('data')] ||
+    DATASETS.movies;
 }
 
 // Initial creation
