@@ -160,4 +160,44 @@ d3.json(DATASET.FILE_PATH).then((data) => {
     .attr('y', 0)
     .attr('width', (d) => d.x1 - d.x0)
     .attr('height', (d) => d.y1 - d.y0);
+
+  // Create legend
+  const categories = Array.from(
+    new Set(root.leaves().map((d) => d.data.category))
+  );
+  const LEGEND_RECT_SIZE = Math.max(width / 100, 14);
+  const LEGEND_TEXT_SIZE = Math.max(width / 100, 10);
+  const LEGEND_SPACING = LEGEND_RECT_SIZE * 10;
+  const LEGEND_ITEMS_PER_ROW = Math.floor(width / LEGEND_SPACING);
+
+  const legend = svg
+    .append('g')
+    .attr('id', 'legend')
+    .attr('transform', `translate(0, ${height + 20})`);
+
+  const legendItem = legend
+    .selectAll('g')
+    .data(categories)
+    .join('g')
+    .attr('transform', (d, i) => {
+      const row = Math.floor(i / LEGEND_ITEMS_PER_ROW);
+      const col = i % LEGEND_ITEMS_PER_ROW;
+      return `translate(${col * LEGEND_SPACING}, ${
+        row * (LEGEND_RECT_SIZE + 5)
+      })`;
+    });
+
+  legendItem
+    .append('rect')
+    .attr('class', 'legend-item')
+    .attr('width', LEGEND_RECT_SIZE)
+    .attr('height', LEGEND_RECT_SIZE)
+    .attr('fill', (d) => color(d));
+
+  legendItem
+    .append('text')
+    .attr('x', LEGEND_RECT_SIZE + 5)
+    .attr('y', LEGEND_RECT_SIZE - 2)
+    .text((d) => d)
+    .attr('font-size', `${LEGEND_TEXT_SIZE}px`);
 });
