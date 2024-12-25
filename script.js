@@ -92,3 +92,16 @@ svg
   .attr('text-anchor', 'middle')
   .text(DATASET.DESCRIPTION)
   .attr('font-size', `${DESCRIPTION_FONT_SIZE}px`);
+
+// Load and process data
+d3.json(DATASET.FILE_PATH).then((data) => {
+  const root = d3
+    .hierarchy(data)
+    .eachBefore((d) => {
+      d.data.id = (d.parent ? d.parent.data.id + '.' : '') + d.data.name;
+    })
+    .sum((d) => d.value)
+    .sort((a, b) => b.height - a.height || b.value - a.value);
+
+  treemap(root);
+});
