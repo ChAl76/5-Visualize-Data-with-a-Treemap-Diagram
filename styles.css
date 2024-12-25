@@ -87,3 +87,37 @@ nav a:hover {
   opacity: 0.8;
   transition: opacity 0.2s;
 }
+
+@media (max-width: 800px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  #title {
+    font-size: 1.8rem;
+  }
+
+  #description {
+    font-size: 0.8rem;
+  }
+
+  nav a {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+  }
+
+  #title {
+    font-size: 1.3rem;
+  }
+
+  #description {
+    font-size: 0.5rem;
+  }
+}

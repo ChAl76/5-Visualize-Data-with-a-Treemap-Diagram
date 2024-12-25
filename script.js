@@ -165,7 +165,7 @@ d3.json(DATASET.FILE_PATH).then((data) => {
   const categories = Array.from(
     new Set(root.leaves().map((d) => d.data.category))
   );
-  const LEGEND_RECT_SIZE = Math.max(width / 100, 14);
+  const LEGEND_RECT_SIZE = Math.max(width / 100, 12);
   const LEGEND_TEXT_SIZE = Math.max(width / 100, 10);
   const LEGEND_SPACING = LEGEND_RECT_SIZE * 10;
   const LEGEND_ITEMS_PER_ROW = Math.floor(width / LEGEND_SPACING);
