@@ -104,4 +104,50 @@ d3.json(DATASET.FILE_PATH).then((data) => {
     .sort((a, b) => b.height - a.height || b.value - a.value);
 
   treemap(root);
+
+  // Create cells
+  const cell = svg
+    .selectAll('g')
+    .data(root.leaves())
+    .join('g')
+    .attr('class', 'group')
+    .attr('transform', (d) => `translate(${d.x0},${d.y0})`);
+
+  // Add rectangles
+  cell
+    .append('rect')
+    .attr('class', 'tile')
+    .attr('data-name', (d) => d.data.name)
+    .attr('data-category', (d) => d.data.category)
+    .attr('data-value', (d) => d.data.value)
+    .attr('width', (d) => d.x1 - d.x0)
+    .attr('height', (d) => d.y1 - d.y0)
+    .attr('fill', (d) => color(d.data.category))
+    .on('mousemove', (event, d) => {
+      tooltip
+        .style('opacity', 0.9)
+        .html(
+          `<strong>${d.data.name}</strong><br>
+            Category: ${d.data.category}<br>
+            Value: ${d.data.value}`
+        )
+        .attr('data-value', d.data.value)
+        .style('left', `${event.pageX + 10}px`)
+        .style('top', `${event.pageY - 28}px`);
+    })
+    .on('mouseout', () => {
+      tooltip.style('opacity', 0);
+    });
+
+  // Add text labels
+  cell
+    .append('text')
+    .attr('clip-path', (d, i) => `url(#clip-${i})`)
+    .selectAll('tspan')
+    .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
+    .join('tspan')
+    .attr('x', 4)
+    .attr('y', (d, i) => 13 + i * 10)
+    .text((d) => d)
+    .attr('font-size', `${Math.max(width / 100, 6)}px`);
 });
