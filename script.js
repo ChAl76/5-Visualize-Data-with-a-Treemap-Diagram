@@ -150,4 +150,14 @@ d3.json(DATASET.FILE_PATH).then((data) => {
     .attr('y', (d, i) => 13 + i * 10)
     .text((d) => d)
     .attr('font-size', `${Math.max(width / 100, 6)}px`);
+
+  // Add clip paths for each cell
+  cell
+    .append('clipPath')
+    .attr('id', (d, i) => `clip-${i}`)
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', (d) => d.x1 - d.x0)
+    .attr('height', (d) => d.y1 - d.y0);
 });
