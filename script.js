@@ -55,7 +55,7 @@ const DATASET =
   DATASETS.kickstarter;
 
 // Create color scale
-const color = d3.scaleOrdinal(d3.schemeCategory10);
+const color = d3.scaleOrdinal(d3.schemePaired);
 
 // Create treemap layout
 const treemap = d3.treemap().size([width, height]).paddingInner(1);
@@ -68,3 +68,27 @@ const tooltip = d3
   .style('position', 'absolute')
   .style('opacity', 0)
   .style('pointer-events', 'none');
+
+// Dynamically calculate font size for title and description
+const TITLE_FONT_SIZE = Math.min(width / 25, 14);
+const DESCRIPTION_FONT_SIZE = Math.min(width / 40, 10);
+const DESCRIPTION_MARGIN = Math.min(TITLE_FONT_SIZE + 10, 30);
+
+// Add title and description
+svg
+  .append('text')
+  .attr('id', 'title')
+  .attr('x', width / 2)
+  .attr('y', -margin.top / 1.95)
+  .attr('text-anchor', 'middle')
+  .text(DATASET.TITLE)
+  .attr('font-size', `${TITLE_FONT_SIZE}px`);
+
+svg
+  .append('text')
+  .attr('id', 'description')
+  .attr('x', width / 2)
+  .attr('y', -margin.top / 1.85 + DESCRIPTION_MARGIN)
+  .attr('text-anchor', 'middle')
+  .text(DATASET.DESCRIPTION)
+  .attr('font-size', `${DESCRIPTION_FONT_SIZE}px`);
